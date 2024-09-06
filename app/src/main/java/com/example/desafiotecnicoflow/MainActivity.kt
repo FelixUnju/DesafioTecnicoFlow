@@ -2,17 +2,8 @@ package com.example.desafiotecnicoflow
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.desafiotecnicoflow.data.Character
 import com.example.desafiotecnicoflow.databinding.ActivityMainBinding
-import com.example.desafiotecnicoflow.repository.FlowRepository
-import com.example.desafiotecnicoflow.service.FlowService
-import com.example.desafiotecnicoflow.ui.CharactersFragment
-import com.example.desafiotecnicoflow.viewmodel.FlowViewModel
-import com.example.desafiotecnicoflow.viewmodel.ViewModelFactory
+import com.example.desafiotecnicoflow.ui.home.CharactersFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container,CharactersFragment())
+        fragmentTransaction.replace(R.id.fragment_container, CharactersFragment())
         fragmentTransaction.commit()
     }
 }

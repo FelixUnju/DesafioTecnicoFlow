@@ -1,4 +1,4 @@
-package com.example.desafiotecnicoflow.ui
+package com.example.desafiotecnicoflow.ui.home
 
 import android.os.Bundle
 import android.util.Log
@@ -8,15 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.desafiotecnicoflow.InfoCharactersAdapter
+import com.example.desafiotecnicoflow.ui.adapter.InfoCharactersAdapter
 import com.example.desafiotecnicoflow.R
 import com.example.desafiotecnicoflow.data.Character
 import com.example.desafiotecnicoflow.databinding.FragmentCharactersBinding
 import com.example.desafiotecnicoflow.repository.FlowRepository
 import com.example.desafiotecnicoflow.service.FlowService
+import com.example.desafiotecnicoflow.ui.adapter.InfoCharacterPagingAdapter
+import com.example.desafiotecnicoflow.ui.detail.CharacterDetailFragment
 import com.example.desafiotecnicoflow.viewmodel.FlowViewModel
 import com.example.desafiotecnicoflow.viewmodel.ViewModelFactory
+import kotlinx.coroutines.launch
 
 
 class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
@@ -26,12 +30,31 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
     private lateinit var adapterCharacter: InfoCharactersAdapter
     lateinit var viewModel: FlowViewModel
 
+    private lateinit var  adpterPaging : InfoCharacterPagingAdapter
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val flowRepository = FlowRepository(FlowService.getInstance())
         viewModel = ViewModelProvider(this, ViewModelFactory(flowRepository)).get(FlowViewModel::class.java)
+    }
+
+    private fun loadingData() {
+        lifecycleScope.launch {
+            viewModel.listDate.collect{ values ->
+                adpterPaging.submitData(values)
+            }
+        }
+    }
+
+    private fun setUpRv() {
+        adpterPaging = InfoCharacterPagingAdapter(this)
+        binding.rvCharacters.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = adpterPaging
+            setHasFixedSize(true)
+        }
     }
 
     override fun onCreateView(
@@ -44,6 +67,11 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setUpRv()
+        loadingData()
+
+        /*
         viewModel.infoCharacters.observe(viewLifecycleOwner){
             adapterCharacter = InfoCharactersAdapter(it.results,this)
             binding.rvCharacters.apply {
@@ -64,6 +92,8 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
         }
 
         viewModel.getInfo()
+
+         */
     }
 
     override fun onDestroyView() {
