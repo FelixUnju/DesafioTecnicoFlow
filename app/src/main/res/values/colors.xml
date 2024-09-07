@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="card_color">#3c3e44</color>
     <color name="text_color">#9e9e9e</color>
+    <color name="loader_color">#9F27C6</color>
 </resources>

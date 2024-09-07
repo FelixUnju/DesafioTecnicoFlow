@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp">
 
+
             <ImageView
                 android:id="@+id/imgCharacter"
                 android:layout_width="match_parent"
@@ -40,15 +41,26 @@
                 android:textSize="24sp"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
+            <View
+                android:id="@+id/circleStatus"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/circle_status"
+                app:layout_constraintTop_toTopOf="@+id/descriptionCharacter"
+                app:layout_constraintBottom_toBottomOf="@+id/descriptionCharacter"
+                app:layout_constraintStart_toStartOf="parent"/>
+
 
             <TextView
                 android:id="@+id/descriptionCharacter"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/nameCharacter"
                 tools:text="Alive - Alien"
+                app:layout_constraintLeft_toRightOf="@+id/circleStatus"
                 android:textSize="16sp"
                 android:textColor="@color/white"
+                android:layout_marginLeft="8dp"
                 android:textStyle="bold" />
 
             <TextView

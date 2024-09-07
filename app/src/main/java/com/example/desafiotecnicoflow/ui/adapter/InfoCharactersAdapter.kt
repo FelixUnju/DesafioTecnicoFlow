@@ -28,7 +28,7 @@ class InfoCharactersAdapter (private val characters:List<Character>,
         val item = characters[position]
         with(holder){
             nameCharacter.text = item.name
-            desciptionCharacter.text = """${item.status}${item.species}"""
+            descriptionCharacter.text = """${item.status}${item.species}"""
             genderCharacter.text = item.gender
             locationCharacter.text = item.location.name
             Glide.with(context).load(item.image).into(imageCharacter)
@@ -44,12 +44,12 @@ class InfoCharactersAdapter (private val characters:List<Character>,
 
         val imageCharacter =  binding.imgCharacter
         val nameCharacter = binding.nameCharacter
-        val desciptionCharacter = binding.descriptionCharacter
+        val descriptionCharacter = binding.descriptionCharacter
         val genderCharacter = binding.genderCharacterDesc
         val locationCharacter = binding.locationCharacter
     }
 
     interface OnClickListener {
-        fun onClick(position: Int, item: Character)
+        fun onClick(position: Int, item: Character?)
     }
 }

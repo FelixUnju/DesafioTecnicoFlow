@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,8 +17,19 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="10dp">
+
+            <ProgressBar
+                android:id="@+id/progressEpisodes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/rvEpisodes"
+                app:layout_constraintEnd_toEndOf="@+id/rvEpisodes"
+                app:layout_constraintTop_toTopOf="@+id/rvEpisodes"
+                app:layout_constraintBottom_toBottomOf="@+id/rvEpisodes"
+                android:indeterminateTint="@color/loader_color"
+                android:visibility="visible"/>
 
             <ImageView
                 android:id="@+id/imgCharacter"
@@ -27,9 +38,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/ic_launcher_background"
-
-                />
+                android:src="@drawable/ic_launcher_background"/>
 
             <TextView
                 android:id="@+id/nameCharacter"
@@ -39,7 +48,7 @@
                 tools:text="Giant Testicle Monster"
                 android:textSize="24sp"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/descriptionCharacter"
@@ -49,7 +58,7 @@
                 tools:text="Alive - Alien"
                 android:textSize="16sp"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/genderCharacter"
@@ -82,7 +91,6 @@
                 android:textColor="@color/text_color"
                 android:layout_marginTop="20dp"
                 android:textStyle="bold" />
-
             <TextView
                 android:id="@+id/locationCharacterDesc"
                 android:layout_width="match_parent"
@@ -91,7 +99,30 @@
                 tools:text="Testicle Monster Dimension"
                 android:textSize="16sp"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/espisodes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/locationCharacterDesc"
+                android:text="Episodes:"
+                android:textSize="16sp"
+                android:textColor="@color/text_color"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvEpisodes"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:listitem="@layout/item_episode"
+                tools:itemCount="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/espisodes" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

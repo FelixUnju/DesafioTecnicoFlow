@@ -1,7 +1,10 @@
 package com.example.desafiotecnicoflow.ui.adapter
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -24,6 +27,11 @@ class InfoCharacterPagingAdapter(private val onClickItem: OnClickListener): Pagi
             genderCharacterDesc.text = item?.gender
             locationCharacterDesc.text = item?.location?.name
             Glide.with(context).load(item?.image).into(imgCharacter)
+            when{
+                item?.status.equals("Alive") -> setColor(circleStatus, Color.GREEN)
+                item?.status.equals("Dead") -> setColor(circleStatus,Color.RED)
+                item?.status.equals("unknown") -> setColor(circleStatus,Color.GRAY)
+            }
         }
         holder.itemView.setOnClickListener {
             onClickItem.onClick(position,item!!)
@@ -41,7 +49,10 @@ class InfoCharacterPagingAdapter(private val onClickItem: OnClickListener): Pagi
 
     }
 
-
+    private fun setColor(circleStatus: View, color: Int) {
+        val background = circleStatus.background as GradientDrawable
+        background.setColor(color)
+    }
 
     companion object{
         val diffCallback = object : DiffUtil.ItemCallback<Character>(){

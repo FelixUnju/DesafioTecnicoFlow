@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.desafiotecnicoflow.ui.adapter.InfoCharactersAdapter
 import com.example.desafiotecnicoflow.R
@@ -28,11 +30,8 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
     private var _binding: FragmentCharactersBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapterCharacter: InfoCharactersAdapter
-    lateinit var viewModel: FlowViewModel
-
+    private lateinit var viewModel: FlowViewModel
     private lateinit var  adpterPaging : InfoCharacterPagingAdapter
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +53,24 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
             layoutManager = LinearLayoutManager(context)
             adapter = adpterPaging
             setHasFixedSize(true)
+        }
+
+        adpterPaging.addLoadStateListener { loadState ->
+
+            if (loadState.refresh is LoadState.Loading || loadState.append is LoadState.Loading) {
+                binding.loader.isVisible = true
+            } else {
+                binding.loader.isVisible = false
+                val errorState = when {
+                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                    else -> null
+                }
+                errorState?.let {
+                    Toast.makeText(context, it.error.toString(), Toast.LENGTH_LONG).show()
+                }
+            }
         }
     }
 
@@ -103,16 +120,16 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CharactersFragment().apply {
-                arguments = Bundle().apply {
+            fun newInstance(param1: String, param2: String) =
+                 CharactersFragment().apply {
+                    arguments = Bundle().apply {
                 }
             }
     }
 
-    override fun onClick(position: Int, item: Character) {
+    override fun onClick(position: Int, item: Character?) {
         parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, CharacterDetailFragment.newInstance(item))
+            .replace(R.id.fragment_container, CharacterDetailFragment.newInstance(item!!))
             .addToBackStack(null)
             .commit()
     }

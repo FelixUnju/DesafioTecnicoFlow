@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/episodesCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="10dp"
+        android:elevation="5dp"
+        app:cardBackgroundColor="@color/cardview_dark_background">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/imgEpisode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/ic_rick"/>
+
+            <TextView
+                android:id="@+id/nameEpisode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/imgEpisode"
+                android:text="Name:"
+                android:textSize="14sp"
+                android:textColor="@color/text_color"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="@+id/imgEpisode"
+                android:layout_marginStart="12dp"/>
+            <TextView
+                android:id="@+id/nameEpisodeDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/nameEpisode"
+                tools:text="Testicle Monster Dimension"
+                app:layout_constraintStart_toEndOf="@+id/imgEpisode"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:layout_marginStart="12dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/airDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/imgEpisode"
+                android:text="Air Date:"
+                android:textSize="14sp"
+                android:textColor="@color/text_color"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/nameEpisodeDetail"
+                android:layout_marginStart="12dp"/>
+            <TextView
+                android:id="@+id/airDateDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/airDate"
+                tools:text="Testicle Monster Dimension"
+                app:layout_constraintStart_toEndOf="@+id/imgEpisode"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:layout_marginStart="12dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/episodeSE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/imgEpisode"
+                android:text="Episode:"
+                android:textSize="14sp"
+                android:textColor="@color/text_color"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/airDateDetail"
+                android:layout_marginStart="12dp"/>
+
+            <TextView
+                android:id="@+id/episodeSEDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/episodeSE"
+                tools:text="Testicle Monster Dimension"
+                app:layout_constraintStart_toEndOf="@+id/imgEpisode"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:layout_marginStart="12dp"
+                android:textStyle="bold"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
