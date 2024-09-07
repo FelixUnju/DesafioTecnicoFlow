@@ -1,7 +1,10 @@
 package com.example.desafiotecnicoflow.ui.adapter
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -10,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.example.desafiotecnicoflow.data.Character
 import com.example.desafiotecnicoflow.databinding.ItemcharacterBinding
 import com.example.desafiotecnicoflow.ui.adapter.InfoCharactersAdapter.OnClickListener
-import com.example.desafiotecnicoflow.ui.adapter.InfoCharactersAdapter.ViewHolder
 
 class InfoCharacterPagingAdapter(private val onClickItem: OnClickListener): PagingDataAdapter<Character, InfoCharacterPagingAdapter.MyViewHolder>(diffCallback) {
 
@@ -24,12 +26,21 @@ class InfoCharacterPagingAdapter(private val onClickItem: OnClickListener): Pagi
             genderCharacterDesc.text = item?.gender
             locationCharacterDesc.text = item?.location?.name
             Glide.with(context).load(item?.image).into(imgCharacter)
+            when{
+                item?.status.equals("Alive") -> setColor(circleStatus,Color.GREEN)
+                item?.status.equals("Dead") -> setColor(circleStatus,Color.RED)
+                item?.status.equals("unknown") -> setColor(circleStatus,Color.GRAY)
+            }
         }
         holder.itemView.setOnClickListener {
             onClickItem.onClick(position,item!!)
         }
     }
 
+    private fun setColor(circleStatus: View, color: Int) {
+        val background = circleStatus.background as GradientDrawable
+        background.setColor(color)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemcharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         context = parent.context
