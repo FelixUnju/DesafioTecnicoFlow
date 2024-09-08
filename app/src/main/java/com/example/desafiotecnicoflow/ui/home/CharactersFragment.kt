@@ -1,5 +1,6 @@
 package com.example.desafiotecnicoflow.ui.home
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.desafiotecnicoflow.ui.adapter.InfoCharactersAdapter
 import com.example.desafiotecnicoflow.R
@@ -39,12 +41,12 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCharactersBinding.inflate(inflater, container, false)
+        setUpRv()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpRv()
         loadingData()
     }
 
@@ -58,8 +60,12 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
 
     private fun setUpRv() {
         adpterPaging = InfoCharacterPagingAdapter(this)
-        binding.rvCharacters.apply {
+        binding.rvCharacters.apply  {
             layoutManager = LinearLayoutManager(context)
+            val orientation = resources.configuration.orientation
+            val spanCount = if (orientation == Configuration.ORIENTATION_LANDSCAPE) 2 else 1
+            val layoutGrid = GridLayoutManager(context, spanCount)
+            layoutManager = layoutGrid
             adapter = adpterPaging
             setHasFixedSize(true)
         }
@@ -77,7 +83,7 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
                     else -> null
                 }
                 errorState?.let {
-                    Toast.makeText(context, it.error.toString(), Toast.LENGTH_LONG).show()
+                    binding.errorScreen?.root?.isVisible = true
                 }
             }
         }
@@ -103,5 +109,6 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, CharacterDetailFragment.newInstance(item!!))
             .addToBackStack(null)
-            .commit()    }
+            .commit()
+    }
 }

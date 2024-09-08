@@ -35,6 +35,9 @@ class CharacterDetailFragment : Fragment(), InfoCharactersAdapter.OnClickListene
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            itemCharacter = it.getSerializable("item") as Character
+        }
     }
 
     override fun onCreateView(
@@ -47,10 +50,8 @@ class CharacterDetailFragment : Fragment(), InfoCharactersAdapter.OnClickListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setViews()
         initViewModel()
-
     }
     private fun initViewModel() {
 
@@ -70,7 +71,7 @@ class CharacterDetailFragment : Fragment(), InfoCharactersAdapter.OnClickListene
                         }
                     }
                     is NetworkResult.Error -> {
-                        Toast.makeText(context, res.message, Toast.LENGTH_SHORT).show()
+                        binding.errorScreen?.root?.isVisible = true
                     }
                     is NetworkResult.Loading -> {
                         progressEpisodes.isVisible = true
@@ -106,11 +107,12 @@ class CharacterDetailFragment : Fragment(), InfoCharactersAdapter.OnClickListene
     }
 
     companion object {
-
         @JvmStatic
         fun newInstance(item: Character) =
             CharacterDetailFragment().apply {
-                itemCharacter = item
+                arguments= Bundle().apply {
+                    putSerializable("item",item)
+                }
             }
     }
 

@@ -39,6 +39,7 @@ class FlowViewModel @Inject constructor(private val flowRepository: FlowReposito
         CoroutineScope(Dispatchers.IO).launch {
             val result = mutableListOf<EpisodeModel>()
             endpoints.forEach { url ->
+                try {
                     val dataResponse : Response<EpisodeModel> = flowRepository.getEpisodes(url)
                     if (dataResponse.isSuccessful && dataResponse.body() != null) {
                         dataResponse.body()?.let {
@@ -49,6 +50,9 @@ class FlowViewModel @Inject constructor(private val flowRepository: FlowReposito
                     }else{
                         _episodeResult.postValue(NetworkResult.Error("Error el servidor"))
                     }
+                }catch (e: Exception){
+                    _episodeResult.postValue(NetworkResult.Error("Error el servidor"))
+                }
             }
             _episodeResult.postValue(NetworkResult.Success(result))
         }

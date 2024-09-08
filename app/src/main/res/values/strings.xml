@@ -9,4 +9,5 @@
     <string name="air_date">Air Date:</string>
     <string name="name">Name:</string>
     <string name="episode">Episode:</string>
+    <string name="something_went_wrong">Something Went Wrong!</string>
 </resources>
