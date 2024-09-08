@@ -1,5 +1,6 @@
 package com.example.desafiotecnicoflow.ui.home
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.desafiotecnicoflow.ui.adapter.InfoCharactersAdapter
 import com.example.desafiotecnicoflow.R
@@ -39,20 +41,18 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
         viewModel = ViewModelProvider(this, ViewModelFactory(flowRepository)).get(FlowViewModel::class.java)
     }
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCharactersBinding.inflate(inflater, container, false)
+        setUpRv()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpRv()
         loadingData()
 
         /*
@@ -91,7 +91,11 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
     private fun setUpRv() {
         adpterPaging = InfoCharacterPagingAdapter(this)
         binding.rvCharacters.apply {
-            layoutManager = LinearLayoutManager(context)
+            val orientation = resources.configuration.orientation
+            // Si está en horizontal, configurar 2 columnas, si no, 1 columna
+            val spanCount = if (orientation == Configuration.ORIENTATION_LANDSCAPE) 2 else 1
+            val layoutManagerGrid = GridLayoutManager(context, spanCount)
+            layoutManager = layoutManagerGrid
             adapter = adpterPaging
             setHasFixedSize(true)
         }

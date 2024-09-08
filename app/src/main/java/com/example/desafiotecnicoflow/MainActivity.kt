@@ -7,6 +7,7 @@ import com.example.desafiotecnicoflow.ui.begin.StartScreenFragment
 
 class MainActivity : AppCompatActivity() {
 
+    private val currentFragmentKey = "currentFragment"
     lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,9 +15,30 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container,StartScreenFragment())
-        fragmentTransaction.commit()
+       if(savedInstanceState == null){
+           val fragmentTransaction =supportFragmentManager.beginTransaction()
+           fragmentTransaction.replace(R.id.fragment_container,StartScreenFragment())
+           fragmentTransaction.commit()
+       }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // Guardar el Fragment actual
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+        currentFragment?.let {
+            supportFragmentManager.putFragment(outState, currentFragmentKey, it)
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        // Restaurar el Fragment actual
+        val currentFragment = supportFragmentManager.getFragment(savedInstanceState, currentFragmentKey)
+        currentFragment?.let {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, it)
+                .commit()
+        }
     }
 }
