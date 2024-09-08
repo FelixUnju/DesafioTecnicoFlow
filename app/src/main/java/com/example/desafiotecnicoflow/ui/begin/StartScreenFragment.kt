@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import com.example.desafiotecnicoflow.R
 import com.example.desafiotecnicoflow.databinding.FragmentStarScreenBinding
 import com.example.desafiotecnicoflow.ui.home.CharactersFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StartScreenFragment : Fragment() {
 
     private var _binding: FragmentStarScreenBinding? = null
@@ -16,9 +18,6 @@ class StartScreenFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
     }
 
     override fun onCreateView(
@@ -32,11 +31,15 @@ class StartScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.start.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, CharactersFragment())
-                .addToBackStack(null)
-                .commit()
+            goToFragment()
         }
+    }
+
+    private fun goToFragment() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, CharactersFragment())
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onDestroyView() {

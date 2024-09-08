@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:cardCornerRadius="10dp"
         android:elevation="5dp"
-        app:cardBackgroundColor="@color/cardview_dark_background">
+        app:cardBackgroundColor="@color/card_episodes">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -34,12 +35,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@+id/imgEpisode"
-                android:text="Name:"
+                android:text="@string/name"
                 android:textSize="14sp"
                 android:textColor="@color/text_color"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="@+id/imgEpisode"
                 android:layout_marginStart="12dp"/>
+
             <TextView
                 android:id="@+id/nameEpisodeDetail"
                 android:layout_width="wrap_content"
@@ -57,12 +59,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@+id/imgEpisode"
-                android:text="Air Date:"
+                android:text="@string/air_date"
                 android:textSize="14sp"
                 android:textColor="@color/text_color"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/nameEpisodeDetail"
                 android:layout_marginStart="12dp"/>
+
             <TextView
                 android:id="@+id/airDateDetail"
                 android:layout_width="wrap_content"
@@ -80,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@+id/imgEpisode"
-                android:text="Episode:"
+                android:text="@string/episode"
                 android:textSize="14sp"
                 android:textColor="@color/text_color"
                 android:textStyle="bold"
@@ -98,6 +101,7 @@
                 android:textColor="@color/white"
                 android:layout_marginStart="12dp"
                 android:textStyle="bold"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

@@ -50,12 +50,23 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"/>
 
+            <View
+                android:id="@+id/circleStatus"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/circle_status"
+                app:layout_constraintTop_toTopOf="@+id/descriptionCharacter"
+                app:layout_constraintBottom_toBottomOf="@+id/descriptionCharacter"
+                app:layout_constraintStart_toStartOf="parent"/>
+
             <TextView
                 android:id="@+id/descriptionCharacter"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/nameCharacter"
+                app:layout_constraintStart_toEndOf="@+id/circleStatus"
                 tools:text="Alive - Alien"
+                android:layout_marginStart="8dp"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:textStyle="bold"/>
@@ -69,7 +80,7 @@
                 android:textSize="16sp"
                 android:textColor="@color/text_color"
                 android:textStyle="bold"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="12dp"/>
 
             <TextView
                 android:id="@+id/genderCharacterDesc"
@@ -79,7 +90,7 @@
                 tools:text="Masculino"
                 android:textSize="16sp"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/locationCharacter"
@@ -89,8 +100,8 @@
                 android:text="@string/last_known_location"
                 android:textSize="16sp"
                 android:textColor="@color/text_color"
-                android:layout_marginTop="20dp"
-                android:textStyle="bold" />
+                android:layout_marginTop="12dp"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/locationCharacterDesc"
                 android:layout_width="match_parent"
@@ -109,7 +120,7 @@
                 android:text="Episodes:"
                 android:textSize="16sp"
                 android:textColor="@color/text_color"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="12dp"
                 android:textStyle="bold"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -121,7 +132,7 @@
                 tools:listitem="@layout/item_episode"
                 tools:itemCount="2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/espisodes" />
+                app:layout_constraintTop_toBottomOf="@+id/espisodes"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

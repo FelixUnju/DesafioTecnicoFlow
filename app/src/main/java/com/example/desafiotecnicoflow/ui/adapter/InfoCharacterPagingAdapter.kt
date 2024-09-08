@@ -14,6 +14,9 @@ import com.example.desafiotecnicoflow.data.Character
 import com.example.desafiotecnicoflow.databinding.ItemcharacterBinding
 import com.example.desafiotecnicoflow.ui.adapter.InfoCharactersAdapter.OnClickListener
 import com.example.desafiotecnicoflow.ui.adapter.InfoCharactersAdapter.ViewHolder
+import com.example.desafiotecnicoflow.utils.Constants.ALIVE
+import com.example.desafiotecnicoflow.utils.Constants.DEAD
+import com.example.desafiotecnicoflow.utils.Constants.UNKNOWN
 
 class InfoCharacterPagingAdapter(private val onClickItem: OnClickListener): PagingDataAdapter<Character, InfoCharacterPagingAdapter.MyViewHolder>(diffCallback) {
 
@@ -28,9 +31,9 @@ class InfoCharacterPagingAdapter(private val onClickItem: OnClickListener): Pagi
             locationCharacterDesc.text = item?.location?.name
             Glide.with(context).load(item?.image).into(imgCharacter)
             when{
-                item?.status.equals("Alive") -> setColor(circleStatus, Color.GREEN)
-                item?.status.equals("Dead") -> setColor(circleStatus,Color.RED)
-                item?.status.equals("unknown") -> setColor(circleStatus,Color.GRAY)
+                item?.status.equals(ALIVE) -> setColor(circleStatus, Color.GREEN)
+                item?.status.equals(DEAD) -> setColor(circleStatus,Color.RED)
+                item?.status.equals(UNKNOWN) -> setColor(circleStatus,Color.GRAY)
             }
         }
         holder.itemView.setOnClickListener {
@@ -45,8 +48,6 @@ class InfoCharacterPagingAdapter(private val onClickItem: OnClickListener): Pagi
     }
 
     inner class MyViewHolder(val binding: ItemcharacterBinding) : RecyclerView.ViewHolder(binding.root){
-
-
     }
 
     private fun setColor(circleStatus: View, color: Int) {

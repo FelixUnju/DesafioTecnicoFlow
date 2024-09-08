@@ -20,7 +20,6 @@
             android:layout_height="wrap_content"
             android:padding="10dp">
 
-
             <ImageView
                 android:id="@+id/imgCharacter"
                 android:layout_width="match_parent"
@@ -29,8 +28,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:src="@drawable/ic_launcher_background"
-                android:scaleType="centerCrop"
-                />
+                android:scaleType="centerCrop"/>
 
             <TextView
                 android:id="@+id/nameCharacter"
@@ -40,7 +38,8 @@
                 tools:text="Giant Testicle Monster"
                 android:textSize="24sp"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
+
             <View
                 android:id="@+id/circleStatus"
                 android:layout_width="8dp"
@@ -49,7 +48,6 @@
                 app:layout_constraintTop_toTopOf="@+id/descriptionCharacter"
                 app:layout_constraintBottom_toBottomOf="@+id/descriptionCharacter"
                 app:layout_constraintStart_toStartOf="parent"/>
-
 
             <TextView
                 android:id="@+id/descriptionCharacter"
@@ -60,8 +58,8 @@
                 app:layout_constraintLeft_toRightOf="@+id/circleStatus"
                 android:textSize="16sp"
                 android:textColor="@color/white"
-                android:layout_marginLeft="8dp"
-                android:textStyle="bold" />
+                android:layout_marginStart="8dp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/genderCharacter"
@@ -72,7 +70,7 @@
                 android:textSize="16sp"
                 android:textColor="@color/text_color"
                 android:textStyle="bold"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="12dp"/>
 
             <TextView
                 android:id="@+id/genderCharacterDesc"
@@ -82,7 +80,7 @@
                 tools:text="Masculino"
                 android:textSize="16sp"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/locationCharacter"
@@ -92,8 +90,8 @@
                 android:text="@string/last_known_location"
                 android:textSize="16sp"
                 android:textColor="@color/text_color"
-                android:layout_marginTop="20dp"
-                android:textStyle="bold" />
+                android:layout_marginTop="12dp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/locationCharacterDesc"
@@ -103,7 +101,8 @@
                 tools:text="Testicle Monster Dimension"
                 android:textSize="16sp"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
