@@ -3,7 +3,7 @@ package com.example.desafiotecnicoflow
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.desafiotecnicoflow.databinding.ActivityMainBinding
-import com.example.desafiotecnicoflow.ui.home.CharactersFragment
+import com.example.desafiotecnicoflow.ui.begin.StartScreenFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container, CharactersFragment())
+        fragmentTransaction.replace(R.id.fragment_container,StartScreenFragment())
         fragmentTransaction.commit()
     }
 }

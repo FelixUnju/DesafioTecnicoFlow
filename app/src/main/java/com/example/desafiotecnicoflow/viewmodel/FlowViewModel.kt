@@ -13,9 +13,11 @@ import com.example.desafiotecnicoflow.data.EpisodeModel
 import com.example.desafiotecnicoflow.data.RickAndMortyInfoModel
 import com.example.desafiotecnicoflow.repository.FlowRepository
 import com.example.desafiotecnicoflow.ui.adapter.InfoCharactersPaging
+import com.example.desafiotecnicoflow.utils.NetworkResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.Request
 import retrofit2.Response
 
 class FlowViewModel constructor(private val flowRepository: FlowRepository) : ViewModel() {
@@ -35,6 +37,11 @@ class FlowViewModel constructor(private val flowRepository: FlowRepository) : Vi
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> get() = _loading
 
+
+    private val _episodeResult = MutableLiveData<NetworkResult<List<EpisodeModel>>> ()
+    val episodeResult: LiveData<NetworkResult<List<EpisodeModel>>> get() = _episodeResult
+
+
     val listDate = Pager(
         config = PagingConfig(pageSize = 1),
         pagingSourceFactory = {InfoCharactersPaging(flowRepository)},
@@ -44,6 +51,33 @@ class FlowViewModel constructor(private val flowRepository: FlowRepository) : Vi
 
     private val infoRick = MutableLiveData<PagingData<RickAndMortyInfoModel>>()
     val _infoRick : LiveData<PagingData<RickAndMortyInfoModel>> get() = infoRick
+
+    suspend fun getEpisodesResult (endpoints: List<String>){
+        _episodeResult.postValue(NetworkResult.Loading())
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = mutableListOf<EpisodeModel>()
+            endpoints.forEach { url ->
+                try {
+                    val dataResponse : Response<EpisodeModel> = flowRepository.getEpisodes(url)
+                    if (dataResponse.isSuccessful && dataResponse.body() != null) {
+                        dataResponse.body()?.let {
+                            result.add(it)
+                        }
+                    } else if (dataResponse.errorBody() != null){
+                        _episodeResult.postValue(NetworkResult.Error("Error en la peticion"))
+                    }else{
+                        _episodeResult.postValue(NetworkResult.Error("Error el servidor"))
+                    }
+
+                }catch (e: Exception){
+                    _error.postValue(true)
+                }
+            }
+            _episodeResult.postValue(NetworkResult.Success(result))
+        }
+    }
+
+
 
     fun getEpisodesCharacter(endpoints: List<String>){
         CoroutineScope(Dispatchers.IO).launch {

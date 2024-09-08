@@ -39,40 +39,7 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
         viewModel = ViewModelProvider(this, ViewModelFactory(flowRepository)).get(FlowViewModel::class.java)
     }
 
-    private fun loadingData() {
-        lifecycleScope.launch {
-            viewModel.listDate.collect{ values ->
-                adpterPaging.submitData(values)
-            }
-        }
-    }
 
-    private fun setUpRv() {
-        adpterPaging = InfoCharacterPagingAdapter(this)
-        binding.rvCharacters.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = adpterPaging
-            setHasFixedSize(true)
-        }
-
-        adpterPaging.addLoadStateListener { loadState ->
-
-            if (loadState.refresh is LoadState.Loading || loadState.append is LoadState.Loading) {
-                binding.loader.isVisible = true
-            } else {
-                binding.loader.isVisible = false
-                val errorState = when {
-                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
-                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
-                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
-                    else -> null
-                }
-                errorState?.let {
-                    Toast.makeText(context, it.error.toString(), Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -113,6 +80,40 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
          */
     }
 
+    private fun loadingData() {
+        lifecycleScope.launch {
+            viewModel.listDate.collect{ values ->
+                adpterPaging.submitData(values)
+            }
+        }
+    }
+
+    private fun setUpRv() {
+        adpterPaging = InfoCharacterPagingAdapter(this)
+        binding.rvCharacters.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = adpterPaging
+            setHasFixedSize(true)
+        }
+
+        adpterPaging.addLoadStateListener { loadState ->
+
+            if (loadState.refresh is LoadState.Loading || loadState.append is LoadState.Loading) {
+                binding.loader.isVisible = true
+            } else {
+                binding.loader.isVisible = false
+                val errorState = when {
+                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                    else -> null
+                }
+                errorState?.let {
+                    Toast.makeText(context, it.error.toString(), Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

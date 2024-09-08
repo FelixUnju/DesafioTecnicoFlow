@@ -32,7 +32,5 @@ interface FlowService {
             }
             return retrofitService!!
         }
-
     }
-
 }
