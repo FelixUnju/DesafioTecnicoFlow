@@ -9,6 +9,8 @@ Capuras de pantalla de la app
 
 ### Pantalla Detalles del Personaje
 Capuras de pantalla de la app
-<img width="270" alt="Screenshot_20240910_005755" src="https://github.com/user-attachments/assets/fac45195-d9c0-406f-a7df-a881baf36203">
-<img width="270" alt="Screenshot_20240910_005755" src="https://github.com/user-attachments/assets/72e6ec16-aa32-4af1-9a0a-9e29b0e35288">
+
+<img width="270" alt="Screenshot_20240910_005755" src="https://github.com/user-attachments/assets/7851a109-27ac-4099-b268-a6bf1af97aed">
+
+
 
