@@ -4,7 +4,9 @@ La app consiste mostrar los personajes que aparecen en la serie  Rick And Mort y
 ### Pantalla Lista de Personjes
 Capuras de pantalla de la app
 
-<img width="270" alt="Screenshot_20240910_005349" src="https://github.com/user-attachments/assets/09f122e9-5faa-4751-b36d-1484003bbe93">
+<img width="270" alt="Screenshot_20240910_005349" src="https://github.com/user-attachments/assets/09f122e9-5faa-4751-b36d-1484003bbe93"> <img width="555" alt="Screenshot_20240910_005530" src="https://github.com/user-attachments/assets/c2675304-f41f-4016-bc66-5b2c81616416">
+
+
 
 
 ### Pantalla Detalles del Personaje
