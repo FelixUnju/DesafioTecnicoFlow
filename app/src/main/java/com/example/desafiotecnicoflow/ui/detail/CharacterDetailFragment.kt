@@ -20,13 +20,15 @@ import com.example.desafiotecnicoflow.databinding.FragmentCharacterDetailBinding
 import com.example.desafiotecnicoflow.ui.adapter.EpisodesCharacterAdapter
 import com.example.desafiotecnicoflow.ui.adapter.InfoCharactersAdapter
 import com.example.desafiotecnicoflow.utils.Constants
+import com.example.desafiotecnicoflow.utils.Constants.BASE_UR_FLOW
+import com.example.desafiotecnicoflow.utils.Constants.KEY_ITEM
 import com.example.desafiotecnicoflow.utils.NetworkResult
 import com.example.desafiotecnicoflow.viewmodel.FlowViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CharacterDetailFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
+class CharacterDetailFragment: Fragment(), InfoCharactersAdapter.OnClickListener {
 
     private lateinit var itemCharacter: Character
     private var _binding: FragmentCharacterDetailBinding? = null
@@ -59,7 +61,6 @@ class CharacterDetailFragment : Fragment(), InfoCharactersAdapter.OnClickListene
             lifecycleScope.launch {
                 viewModel.getEpisodesResult(itemCharacter.episode)
             }
-
             viewModel.episodeResult.observe(viewLifecycleOwner) { res ->
                 progressEpisodes.isVisible = false
                 when (res) {
@@ -111,16 +112,12 @@ class CharacterDetailFragment : Fragment(), InfoCharactersAdapter.OnClickListene
         fun newInstance(item: Character) =
             CharacterDetailFragment().apply {
                 arguments= Bundle().apply {
-                    putSerializable("item",item)
+                    putSerializable(KEY_ITEM,item)
                 }
             }
     }
 
     override fun onClick(position: Int, item: Character?) {
-        val urlIntent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("https://web.app.flow.com.ar/")
-        )
-        startActivity(urlIntent)
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BASE_UR_FLOW)))
     }
 }

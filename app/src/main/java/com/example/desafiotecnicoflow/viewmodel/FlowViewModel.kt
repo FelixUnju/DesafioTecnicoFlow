@@ -13,6 +13,8 @@ import com.example.desafiotecnicoflow.data.EpisodeModel
 import com.example.desafiotecnicoflow.data.RickAndMortyInfoModel
 import com.example.desafiotecnicoflow.repository.FlowRepository
 import com.example.desafiotecnicoflow.ui.adapter.InfoCharactersPaging
+import com.example.desafiotecnicoflow.utils.Constants.ERROR_QUERY
+import com.example.desafiotecnicoflow.utils.Constants.ERROR_SERVER
 import com.example.desafiotecnicoflow.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -28,8 +30,7 @@ class FlowViewModel @Inject constructor(private val flowRepository: FlowReposito
     private val _episodeResult = MutableLiveData<NetworkResult<List<EpisodeModel>>> ()
     val episodeResult: LiveData<NetworkResult<List<EpisodeModel>>> get() = _episodeResult
 
-    val listDate = Pager(
-                        config = PagingConfig(pageSize = 20),
+    val listDate = Pager(config = PagingConfig(pageSize = 20),
                         pagingSourceFactory = {InfoCharactersPaging(flowRepository)},
                         initialKey = 1 )
                         .flow.cachedIn(viewModelScope)
@@ -46,12 +47,12 @@ class FlowViewModel @Inject constructor(private val flowRepository: FlowReposito
                             result.add(it)
                         }
                     } else if (dataResponse.errorBody() != null){
-                        _episodeResult.postValue(NetworkResult.Error("Error en la peticion"))
+                        _episodeResult.postValue(NetworkResult.Error(ERROR_QUERY))
                     }else{
-                        _episodeResult.postValue(NetworkResult.Error("Error el servidor"))
+                        _episodeResult.postValue(NetworkResult.Error(ERROR_SERVER))
                     }
                 }catch (e: Exception){
-                    _episodeResult.postValue(NetworkResult.Error("Error el servidor"))
+                    _episodeResult.postValue(NetworkResult.Error(ERROR_SERVER))
                 }
             }
             _episodeResult.postValue(NetworkResult.Success(result))
