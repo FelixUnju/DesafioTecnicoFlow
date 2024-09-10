@@ -11,7 +11,7 @@ Capuras de pantalla de la app
 Capuras de pantalla de la app
 
 <img width="270" alt="Screenshot_20240910_005755" src="https://github.com/user-attachments/assets/7851a109-27ac-4099-b268-a6bf1af97aed">
-![Screenshot_20240910_010115](https://github.com/user-attachments/assets/0ec9d970-02ff-49ad-8372-ca5c36494ac0)
+<img width="555" alt="Screenshot_20240910_010115" src="https://github.com/user-attachments/assets/f1d279b1-334a-470c-b7b1-62dc5563d9cd">
 
 
 
