@@ -8,4 +8,6 @@ Capuras de pantalla de la app
 
 ### Pantalla Detalles del Personaje
 Capuras de pantalla de la app
+![image](https://github.com/user-attachments/assets/19e20bde-6f27-4d42-904b-b23f72528581)
+![image](https://github.com/user-attachments/assets/72e6ec16-aa32-4af1-9a0a-9e29b0e35288)
 
