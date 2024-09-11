@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.desafiotecnicoflow.databinding.ActivityMainBinding
 import com.example.desafiotecnicoflow.ui.begin.StartScreenFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val currentFragmentKey = "currentFragment"
@@ -15,16 +17,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-       if(savedInstanceState == null){
-           val fragmentTransaction =supportFragmentManager.beginTransaction()
-           fragmentTransaction.replace(R.id.fragment_container,StartScreenFragment())
-           fragmentTransaction.commit()
-       }
+        if(savedInstanceState == null){
+            val fragmentTransaction =supportFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_container,StartScreenFragment())
+            fragmentTransaction.commit()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        // Guardar el Fragment actual
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
         currentFragment?.let {
             supportFragmentManager.putFragment(outState, currentFragmentKey, it)

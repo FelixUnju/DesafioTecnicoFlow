@@ -5,12 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:cardCornerRadius="10dp"
         android:elevation="5dp"
         app:cardBackgroundColor="@color/card_color">
@@ -20,21 +22,10 @@
             android:layout_height="match_parent"
             android:padding="10dp">
 
-            <ProgressBar
-                android:id="@+id/progressEpisodes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/rvEpisodes"
-                app:layout_constraintEnd_toEndOf="@+id/rvEpisodes"
-                app:layout_constraintTop_toTopOf="@+id/rvEpisodes"
-                app:layout_constraintBottom_toBottomOf="@+id/rvEpisodes"
-                android:indeterminateTint="@color/loader_color"
-                android:visibility="visible"/>
-
             <ImageView
                 android:id="@+id/imgCharacter"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -123,22 +114,36 @@
                 android:layout_marginTop="12dp"
                 android:textStyle="bold"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvEpisodes"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:listitem="@layout/item_episode"
-                tools:itemCount="2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/espisodes"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <include
-            android:id="@+id/errorScreen"
-            android:visibility="gone"
-            layout="@layout/error_screen"/>
-
     </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvEpisodes"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/item_episode"
+        tools:itemCount="2"
+        app:layout_constraintStart_toStartOf="@id/vertical"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <ProgressBar
+        android:id="@+id/progressEpisodes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/rvEpisodes"
+        app:layout_constraintEnd_toEndOf="@+id/rvEpisodes"
+        app:layout_constraintTop_toTopOf="@+id/rvEpisodes"
+        app:layout_constraintBottom_toBottomOf="@+id/rvEpisodes"
+        android:indeterminateTint="@color/black"
+        android:visibility="gone"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

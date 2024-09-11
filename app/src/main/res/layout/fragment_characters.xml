@@ -42,4 +42,9 @@
         tools:listitem="@layout/itemcharacter"
         tools:itemCount="2"/>
 
+    <include
+        android:id="@+id/errorScreen"
+        android:visibility="gone"
+        layout="@layout/error_screen"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

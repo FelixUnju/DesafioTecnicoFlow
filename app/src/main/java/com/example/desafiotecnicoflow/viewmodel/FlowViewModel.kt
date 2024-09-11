@@ -13,44 +13,27 @@ import com.example.desafiotecnicoflow.data.EpisodeModel
 import com.example.desafiotecnicoflow.data.RickAndMortyInfoModel
 import com.example.desafiotecnicoflow.repository.FlowRepository
 import com.example.desafiotecnicoflow.ui.adapter.InfoCharactersPaging
+import com.example.desafiotecnicoflow.utils.Constants.ERROR_QUERY
+import com.example.desafiotecnicoflow.utils.Constants.ERROR_SERVER
 import com.example.desafiotecnicoflow.utils.NetworkResult
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.Request
 import retrofit2.Response
+import javax.inject.Inject
 
-class FlowViewModel constructor(private val flowRepository: FlowRepository) : ViewModel() {
-
-    private  val _infoCharacters = MutableLiveData<RickAndMortyInfoModel>()
-    val infoCharacters: LiveData<RickAndMortyInfoModel> get() = _infoCharacters
-
-    private val _episodeCharacters = MutableLiveData<List<EpisodeModel>>()
-    val episodeCharacters: LiveData<List<EpisodeModel>> get() = _episodeCharacters
-
-    private val _error = MutableLiveData<Boolean>()
-    val error: LiveData<Boolean> get() = _error
-
-    private val _errorMessage = MutableLiveData<String>()
-    val errorMessage: LiveData<String> get() = _errorMessage
-
-    private val _loading = MutableLiveData<Boolean>()
-    val loading: LiveData<Boolean> get() = _loading
-
+@HiltViewModel
+class FlowViewModel @Inject constructor(private val flowRepository: FlowRepository) : ViewModel() {
 
     private val _episodeResult = MutableLiveData<NetworkResult<List<EpisodeModel>>> ()
     val episodeResult: LiveData<NetworkResult<List<EpisodeModel>>> get() = _episodeResult
 
-
-    val listDate = Pager(
-        config = PagingConfig(pageSize = 1),
-        pagingSourceFactory = {InfoCharactersPaging(flowRepository)},
-        initialKey = 1 )
-        .flow.cachedIn(viewModelScope)
-
-
-    private val infoRick = MutableLiveData<PagingData<RickAndMortyInfoModel>>()
-    val _infoRick : LiveData<PagingData<RickAndMortyInfoModel>> get() = infoRick
+    val listDate = Pager(config = PagingConfig(pageSize = 20),
+                        pagingSourceFactory = {InfoCharactersPaging(flowRepository)},
+                        initialKey = 1 )
+                        .flow.cachedIn(viewModelScope)
 
     suspend fun getEpisodesResult (endpoints: List<String>){
         _episodeResult.postValue(NetworkResult.Loading())
@@ -64,56 +47,15 @@ class FlowViewModel constructor(private val flowRepository: FlowRepository) : Vi
                             result.add(it)
                         }
                     } else if (dataResponse.errorBody() != null){
-                        _episodeResult.postValue(NetworkResult.Error("Error en la peticion"))
+                        _episodeResult.postValue(NetworkResult.Error(ERROR_QUERY))
                     }else{
-                        _episodeResult.postValue(NetworkResult.Error("Error el servidor"))
+                        _episodeResult.postValue(NetworkResult.Error(ERROR_SERVER))
                     }
-
                 }catch (e: Exception){
-                    _error.postValue(true)
+                    _episodeResult.postValue(NetworkResult.Error(ERROR_SERVER))
                 }
             }
             _episodeResult.postValue(NetworkResult.Success(result))
         }
-    }
-
-
-
-    fun getEpisodesCharacter(endpoints: List<String>){
-        CoroutineScope(Dispatchers.IO).launch {
-            val result = mutableListOf<EpisodeModel>()
-            endpoints.forEach { url ->
-                try {
-                    val dataResponse : Response<EpisodeModel> = flowRepository.getEpisodes(url)
-                    if (dataResponse.isSuccessful) {
-                        dataResponse.body()?.let {
-                            result.add(it)
-                        }
-                    } else {
-                        _error.postValue(true)
-                    }
-                }catch (e: Exception){
-                    _error.postValue(true)
-                }
-            }
-            _episodeCharacters.postValue(result)
-        }
-    }
-
-    fun getInfo(){
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = flowRepository.getAllInfo()
-            if (response.isSuccessful) {
-                _infoCharacters.postValue(response.body())
-               _loading.postValue(false)
-            } else {
-                onError("Error : ${response.message()} ")
-            }
-        }
-    }
-
-    private fun onError(message: String) {
-        _errorMessage.value = message
-        _loading.postValue(false)
     }
 }
