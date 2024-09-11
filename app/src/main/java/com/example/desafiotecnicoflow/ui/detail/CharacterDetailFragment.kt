@@ -38,7 +38,7 @@ class CharacterDetailFragment: Fragment(), InfoCharactersAdapter.OnClickListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            itemCharacter = it.getSerializable("item") as Character
+            itemCharacter = it.getParcelable(KEY_ITEM)!!
         }
     }
 
@@ -112,7 +112,7 @@ class CharacterDetailFragment: Fragment(), InfoCharactersAdapter.OnClickListener
         fun newInstance(item: Character) =
             CharacterDetailFragment().apply {
                 arguments= Bundle().apply {
-                    putSerializable(KEY_ITEM,item)
+                    putParcelable(KEY_ITEM,item)
                 }
             }
     }
