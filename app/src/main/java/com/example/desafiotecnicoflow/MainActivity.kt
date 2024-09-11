@@ -9,9 +9,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
-
     private val currentFragmentKey = "currentFragment"
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +22,13 @@ class MainActivity : AppCompatActivity() {
             fragmentTransaction.replace(R.id.fragment_container,StartScreenFragment())
             fragmentTransaction.commit()
         }
+       if(savedInstanceState == null){
+           val fragmentTransaction =supportFragmentManager.beginTransaction()
+           fragmentTransaction.replace(R.id.fragment_container,StartScreenFragment())
+           fragmentTransaction.commit()
+       }
     }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
@@ -31,8 +36,10 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.putFragment(outState, currentFragmentKey, it)
         }
     }
+
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
+        // Restaurar el Fragment actual
         val currentFragment = supportFragmentManager.getFragment(savedInstanceState, currentFragmentKey)
         currentFragment?.let {
             supportFragmentManager.beginTransaction()

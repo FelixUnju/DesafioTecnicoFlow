@@ -88,6 +88,7 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
             }
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
