@@ -22,11 +22,6 @@ class MainActivity : AppCompatActivity() {
             fragmentTransaction.replace(R.id.fragment_container,StartScreenFragment())
             fragmentTransaction.commit()
         }
-       if(savedInstanceState == null){
-           val fragmentTransaction =supportFragmentManager.beginTransaction()
-           fragmentTransaction.replace(R.id.fragment_container,StartScreenFragment())
-           fragmentTransaction.commit()
-       }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

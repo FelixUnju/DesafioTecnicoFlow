@@ -29,8 +29,8 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
 
     private var _binding: FragmentCharactersBinding? = null
     private val binding get() = _binding!!
-    private lateinit var  adpterPaging : InfoCharacterPagingAdapter
-    private val viewModel : FlowViewModel by viewModels()
+    private lateinit var adpterPaging: InfoCharacterPagingAdapter
+    private val viewModel: FlowViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,12 +47,13 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         loadingData()
     }
 
     private fun loadingData() {
         lifecycleScope.launch {
-            viewModel.listDate.collect{ values ->
+            viewModel.listDate.collect { values ->
                 adpterPaging.submitData(values)
             }
         }
@@ -60,30 +61,37 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
 
     private fun setUpRv() {
         adpterPaging = InfoCharacterPagingAdapter(this)
-        binding.rvCharacters.apply  {
+        binding.rvCharacters.apply {
             layoutManager = LinearLayoutManager(context)
             val orientation = resources.configuration.orientation
             val spanCount = if (orientation == Configuration.ORIENTATION_LANDSCAPE) 2 else 1
             val layoutGrid = GridLayoutManager(context, spanCount)
             layoutManager = layoutGrid
-            adapter = adpterPaging
-            setHasFixedSize(true)
-        }
+            binding.rvCharacters.apply {
+                val orientation = resources.configuration.orientation
+                // Si está en horizontal, configurar 2 columnas, si no, 1 columna
+                val spanCount = if (orientation == Configuration.ORIENTATION_LANDSCAPE) 2 else 1
+                val layoutManagerGrid = GridLayoutManager(context, spanCount)
+                layoutManager = layoutManagerGrid
+                adapter = adpterPaging
+                setHasFixedSize(true)
+            }
 
-        adpterPaging.addLoadStateListener { loadState ->
+            adpterPaging.addLoadStateListener { loadState ->
 
-            if (loadState.refresh is LoadState.Loading || loadState.append is LoadState.Loading) {
-                binding.loader.isVisible = true
-            } else {
-                binding.loader.isVisible = false
-                val errorState = when {
-                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
-                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
-                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
-                    else -> null
-                }
-                errorState?.let {
-                    binding.errorScreen?.root?.isVisible = true
+                if (loadState.refresh is LoadState.Loading || loadState.append is LoadState.Loading) {
+                    binding.loader.isVisible = true
+                } else {
+                    binding.loader.isVisible = false
+                    val errorState = when {
+                        loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                        loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                        loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                        else -> null
+                    }
+                    errorState?.let {
+                        binding.errorScreen?.root?.isVisible = true
+                    }
                 }
             }
         }
@@ -96,12 +104,13 @@ class CharactersFragment : Fragment(), InfoCharactersAdapter.OnClickListener {
 
     companion object {
         @JvmStatic
-            fun newInstance(param1: String, param2: String) =
-                 CharactersFragment().apply {
-                    arguments = Bundle().apply {
+        fun newInstance(param1: String, param2: String) =
+            CharactersFragment().apply {
+                arguments = Bundle().apply {
                 }
             }
     }
+
     override fun onClick(position: Int, item: Character?) {
         goToFramnet(item)
     }
